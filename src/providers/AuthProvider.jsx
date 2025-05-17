@@ -16,7 +16,7 @@ export const AuthContext = createContext(null);
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
-	const googleProvider = new GoogleAuthProvider();
+
 	const axiosPublic = useAxiosPublic();
 
 	const createUser = (email, password) => {
@@ -31,7 +31,8 @@ const AuthProvider = ({ children }) => {
 
 	const googleSignIn = () => {
 		setLoading(true);
-		return signInWithPopup(auth, googleProvider);
+		const provider = new GoogleAuthProvider();
+		return signInWithPopup(auth, provider).finally(() => setLoading(false));
 	};
 
 	const logOut = () => {

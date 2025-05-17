@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import toast from "react-hot-toast";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 import loginImg from "../../src/assets/login.jpg";
 import SocialLogin from "../components/SocialLogin";
 import useAuth from "../hooks/useAuth";
@@ -26,12 +26,23 @@ const Login = () => {
 		setLoading(true);
 		signInUser(data.email, data.password)
 			.then((result) => {
+				if (result.user) {
+					Swal.fire({
+						position: "bottom-end",
+						icon: "success",
+						title: "Logged in successfully.",
+						showConfirmButton: false,
+						timer: 1100,
+					});
+				}
+
 				setLoading(false);
-				toast.success("Login Successfully");
-				const user = { email: result.user.email };
-				console.log(user);
+				// toast.success("Login Successfully");
+				const userInfo = { email: result.user.email };
+
+				console.log(userInfo);
 				/* axios
-					.post("http://localhost:5001/jwt", user, {
+					.post("http://localhost:5001/jwt", userInfo, {
 						withCredentials: true,
 					})
 					.then((data) => {
