@@ -10,12 +10,14 @@ const Layout = () => {
 		location.pathname.includes("login") ||
 		location.pathname.includes("register");
 	return (
-		<div>
+		<>
 			<Toaster></Toaster>
 			{noHeaderFooter || <Navbar></Navbar>}
-			<Outlet></Outlet>
+			<div className="container mx-auto min-h-dvh mt-1">
+				<Outlet></Outlet>
+			</div>
 			{noHeaderFooter || <Footer></Footer>}
-		</div>
+		</>
 	);
 };
 
