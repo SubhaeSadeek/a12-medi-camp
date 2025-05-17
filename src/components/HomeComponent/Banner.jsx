@@ -45,10 +45,10 @@ const Banner = () => {
 						<img
 							src={slide.image}
 							alt={slide.caption}
-							className="w-full object-cover h-96 md:h-[500px]"
+							className="w-full object-cover h-32 md:h-96 "
 						/>
 
-						<div className="absolute bottom-4 left-0 right-0 text-center">
+						<div className="absolute top-32 left-0 right-0 text-center">
 							<p className="text-red-400 font-semibold text-2xl w-1/2 bg-black/50 mx-auto py-2 px-4">
 								{slide.caption}
 							</p>
