@@ -231,9 +231,7 @@ const JoinCampModal = ({ camp, refetch }) => {
 											{...register("gendar", { required: true })}
 											className="select-bordered select dark:bg-slate-800 dark:text-white"
 										>
-											<option selected disabled value="">
-												Gender
-											</option>
+											<option selected disabled value="Gender"></option>
 											<option value="male">Male</option>
 											<option value="female">Female</option>
 										</select>

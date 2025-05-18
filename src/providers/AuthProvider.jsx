@@ -11,12 +11,16 @@ import { createContext, useEffect, useState } from "react";
 
 import { auth } from "../firebase/firebase.config";
 import useAxiosPublic from "../hooks/useAxiosPublic";
+import useAxiosSecure from "../hooks/useAxiosSecure";
+
 export const AuthContext = createContext(null);
 
 const AuthProvider = ({ children }) => {
 	const [user, setUser] = useState(null);
 	const [loading, setLoading] = useState(true);
+	const [isAdmin, setIsAdmin] = useState(false);
 
+	const axiosSecure = useAxiosSecure();
 	const axiosPublic = useAxiosPublic();
 
 	const createUser = (email, password) => {
@@ -51,27 +55,33 @@ const AuthProvider = ({ children }) => {
 		const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
 			setUser(currentUser);
 			if (currentUser) {
-				// get token and store client
 				const userInfo = { email: currentUser.email };
+
 				axiosPublic.post("/jwt", userInfo).then((res) => {
 					if (res.data.token) {
 						localStorage.setItem("user-token", res.data.token);
-						setLoading(false);
+
+						axiosSecure
+							.get(`/user/admin/${currentUser.email}`)
+							.then((res) => setIsAdmin(res.data.admin))
+							.catch(() => setIsAdmin(false));
 					}
+					setLoading(false);
 				});
 			} else {
 				localStorage.removeItem("user-token");
+				setIsAdmin(false);
 				setLoading(false);
 			}
 		});
-		return () => {
-			return unsubscribe();
-		};
-	}, [axiosPublic]);
+
+		return () => unsubscribe();
+	}, [axiosPublic, axiosSecure]);
 
 	const authInfo = {
 		user,
 		loading,
+		isAdmin,
 		createUser,
 		signInUser,
 		googleSignIn,

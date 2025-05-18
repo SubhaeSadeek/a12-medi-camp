@@ -3,10 +3,12 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import useAuth from "../hooks/useAuth";
 
 const Navbar = () => {
-	const { user, signOutUser } = useAuth();
+	const { user, isAdmin, logOut } = useAuth();
+	console.log(user);
+
 	const navigate = useNavigate();
 	const signOutUsers = () => {
-		signOutUser()
+		logOut()
 			.then(() => {
 				console.log("signed out successfully");
 			})
@@ -34,7 +36,7 @@ const Navbar = () => {
 			</li>
 			<li>
 				<NavLink
-					to={"/allBlogs"}
+					to={"/available-camps"}
 					style={({ isActive }) => {
 						return {
 							fontWeight: isActive ? "bold" : "",
@@ -44,70 +46,80 @@ const Navbar = () => {
 						};
 					}}
 				>
-					All Blogs
+					Available Camps
 				</NavLink>
 			</li>
-			<li>
-				<NavLink
-					to={"/featuredBlogs"}
-					style={({ isActive }) => {
-						return {
-							fontWeight: isActive ? "bold" : "",
-							color: isActive ? "red" : "",
-							textDecoration: isActive ? "underline" : "",
-							marginRight: "1rem",
-						};
-					}}
-				>
-					Featured Blogs
-				</NavLink>
-			</li>
-			<li>
-				<NavLink
-					to={"/addBlogs"}
-					style={({ isActive }) => {
-						return {
-							fontWeight: isActive ? "bold" : "",
-							color: isActive ? "red" : "",
-							textDecoration: isActive ? "underline" : "",
-							marginRight: "1rem",
-						};
-					}}
-				>
-					Add Blogs
-				</NavLink>
-			</li>
-
-			<li>
-				<NavLink
-					to={"/myBlogs"}
-					style={({ isActive }) => {
-						return {
-							fontWeight: isActive ? "bold" : "",
-							color: isActive ? "red" : "",
-							textDecoration: isActive ? "underline" : "",
-							marginRight: "1rem",
-						};
-					}}
-				>
-					My Blogs
-				</NavLink>
-			</li>
-			<li>
-				<NavLink
-					to={"/wishList"}
-					style={({ isActive }) => {
-						return {
-							fontWeight: isActive ? "bold" : "",
-							color: isActive ? "red" : "",
-							textDecoration: isActive ? "underline" : "",
-							marginRight: "3rem",
-						};
-					}}
-				>
-					Wishlist
-				</NavLink>
-			</li>
+			{user ? (
+				isAdmin ? (
+					<>
+						<li>
+							<NavLink
+								to={"/dashboard/organizer-profile"}
+								style={({ isActive }) => {
+									return {
+										fontWeight: isActive ? "bold" : "",
+										color: isActive ? "red" : "",
+										textDecoration: isActive ? "underline" : "",
+										marginRight: "1rem",
+									};
+								}}
+							>
+								Profile
+							</NavLink>
+						</li>
+						<li>
+							<NavLink
+								to={"/dashboard/organizer-overview"}
+								style={({ isActive }) => {
+									return {
+										fontWeight: isActive ? "bold" : "",
+										color: isActive ? "red" : "",
+										textDecoration: isActive ? "underline" : "",
+										marginRight: "1rem",
+									};
+								}}
+							>
+								Overview
+							</NavLink>
+						</li>
+					</>
+				) : (
+					<>
+						<li>
+							<NavLink
+								to={"/dashboard/participant-profile"}
+								style={({ isActive }) => {
+									return {
+										fontWeight: isActive ? "bold" : "",
+										color: isActive ? "red" : "",
+										textDecoration: isActive ? "underline" : "",
+										marginRight: "1rem",
+									};
+								}}
+							>
+								Profile
+							</NavLink>
+						</li>
+						<li>
+							<NavLink
+								to={"/dashboard/participant-overview"}
+								style={({ isActive }) => {
+									return {
+										fontWeight: isActive ? "bold" : "",
+										color: isActive ? "red" : "",
+										textDecoration: isActive ? "underline" : "",
+										marginRight: "1rem",
+									};
+								}}
+							>
+								Overview
+							</NavLink>
+						</li>
+					</>
+				)
+			) : (
+				""
+			)}
 		</>
 	);
 	return (
@@ -150,40 +162,54 @@ const Navbar = () => {
 			</div>
 			<div className="navbar-end gap-1.5">
 				{user ? (
-					<>
-						{/* <p>{user.email}</p> */}
-
-						{/* *************** */}
-
-						<div className="tooltip tooltip-bottom tooltip-accent">
-							<div className="tooltip-content">
-								<div className="text-sm text-fuchsia-800">
-									{user.displayName}
-								</div>
-							</div>
-							<div className="avatar">
-								<div className="w-10 rounded-full border-2 border-accent">
-									<img src={user?.photoURL} />
-								</div>
+					<div className="dropdown dropdown-end">
+						<div
+							tabIndex={0}
+							role="button"
+							className="btn btn-ghost btn-circle avatar"
+						>
+							<div className="w-10 rounded-full">
+								<img referrerPolicy="no-referrer" alt="" src={user?.photoURL} />
 							</div>
 						</div>
-						{/* *************** */}
-						<button
-							onClick={signOutUsers}
-							className="btn btn-neutral rounded-4xl"
+						<ul
+							tabIndex={0}
+							className="menu menu-sm font-semibold dropdown-content rounded-box mt-3 space-y-2 w-40 p-2 text-xl shadow z-50"
 						>
-							Logout
-						</button>
-					</>
+							<button disabled className="text-start ml-3">
+								<a>{user?.displayName}</a>
+							</button>
+							{user && isAdmin && (
+								<li>
+									<Link
+										className="text-xl"
+										to={"/dashboard/organizer-overview"}
+									>
+										Dashboard
+									</Link>
+								</li>
+							)}
+							{user && !isAdmin && (
+								<li>
+									<Link
+										className="text-xl"
+										to={"/dashboard/participant-overview"}
+									>
+										Dashboard
+									</Link>
+								</li>
+							)}
+							<li>
+								<button className="text-xl uppercase" onClick={signOutUsers}>
+									Sign Out
+								</button>
+							</li>
+						</ul>
+					</div>
 				) : (
-					<>
-						<Link to={"/login"}>
-							<button className="btn btn-outline rounded-4xl">Login</button>
-						</Link>
-						<Link to={"/register"}>
-							<button className="btn btn-accent rounded-4xl">Register</button>
-						</Link>
-					</>
+					<Link to={"/logIn"} className="btn bg-primary font-bold">
+						Join Us
+					</Link>
 				)}
 			</div>
 		</div>

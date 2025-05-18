@@ -1,27 +1,28 @@
 import { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
-import Swal from "sweetalert2";
-import registration from "../assets/registration.png";
+import toast from "react-hot-toast";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import registerImg from "../assets/registration.png";
 import SocialLogin from "../components/SocialLogin";
 import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useTitle from "../hooks/useTitle";
-const _imageHostingKey = import.meta.env.IBB_IMAGE_UPLOAD_KEY;
+const _imageHostingKey = import.meta.env.VITE_IBB_IMAGE_UPLOAD_KEY;
 const ibbImageHostLink = `https://api.imgbb.com/1/upload?key=${_imageHostingKey}`;
 const Register = () => {
 	useTitle("Register");
 	const axiosPublic = useAxiosPublic();
+	const location = useLocation();
+	const navigate = useNavigate();
 	const [loading, setLoading] = useState(false);
+	const { createUser, updateUserProfile } = useAuth();
+
 	const {
 		register,
 		handleSubmit,
 		reset,
 		formState: { errors },
 	} = useForm();
-	const { createUser, updateUserProfile } = useAuth();
-	const navigate = useNavigate();
-
 	const onSubmit = async (data) => {
 		setLoading(true);
 		const imageFile = { image: data.image[0] };
@@ -33,38 +34,35 @@ const Register = () => {
 
 		createUser(data.email, data.password)
 			.then((result) => {
-				const user = result.user;
-				console.log(user);
-				updateUserProfile({
-					displayName: data.name,
-					photoURL: res.data.data.display_url,
-				});
+				updateUserProfile(data.name, res.data.data.display_url);
+				console.log(result.user);
 				const userInfo = {
 					name: data.name,
 					email: data.email,
 					photoURL: res.data.data.display_url,
-					signInTime: user.metadata.lastSignInTime,
 				};
 
-				axiosPublic.post("/users", userInfo).then((res) => {
+				axiosPublic.post("/user", userInfo).then((res) => {
 					if (res.data.insertedId) {
-						Swal.fire({
-							icon: "success",
-							title: "User created successfully.",
-							showConfirmButton: true,
-						});
-						navigate("/");
+						reset();
+						setLoading(false);
+						toast.success("Sign Up successful");
+						navigate(location?.state ? location.state : "/");
 					}
 				});
 			})
-			.catch((error) => console.log(error));
-		reset();
+			.catch((err) => {
+				if (err && err.code) {
+					toast.error(err.code);
+				}
+			});
 	};
+
 	return (
 		<div className="max-w-6xl mx-auto flex justify-center items-center min-h-screen text-secondary my-6 px-2">
 			<div className="hero-content flex-col shadow-custom-dark md:flex-row shadow-card-shadow">
 				<div className="text-center hidden md:block lg:text-left">
-					<img src={registration} alt="" />
+					<img src={registerImg} alt="" />
 				</div>
 				<div className="card w-full max-w-md shrink-0 ">
 					<form onSubmit={handleSubmit(onSubmit)} className="card-body">
@@ -149,11 +147,7 @@ const Register = () => {
 
 						<div className="form-control mt-6">
 							<button className="btn rounded-lg font-bold bg-primary hover:bg-primary-hover">
-								{loading ? (
-									<TbFidgetSpinner className="animate-spin m-auto" />
-								) : (
-									"Sign Up"
-								)}
+								{loading ? "Loading..." : "Sign Up"}
 							</button>
 						</div>
 
