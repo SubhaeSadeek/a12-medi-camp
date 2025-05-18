@@ -1,6 +1,8 @@
 import { NavLink } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
 
 const Footer = () => {
+	const { user, isAdmin } = useAuth();
 	return (
 		<footer className="footer footer-horizontal footer-center bg-indigo-600/60 text-white  p-10">
 			<ul className="grid grid-flow-col gap-4">
@@ -11,6 +13,7 @@ const Footer = () => {
 							return {
 								fontWeight: isActive ? "bold" : "",
 								color: isActive ? "red" : "",
+								textDecoration: isActive ? "underline" : "",
 								marginRight: "1rem",
 							};
 						}}
@@ -20,72 +23,103 @@ const Footer = () => {
 				</li>
 				<li>
 					<NavLink
-						to={"/allBlogs"}
+						to={"/available-camps"}
 						style={({ isActive }) => {
 							return {
 								fontWeight: isActive ? "bold" : "",
 								color: isActive ? "red" : "",
+								textDecoration: isActive ? "underline" : "",
 								marginRight: "1rem",
 							};
 						}}
 					>
-						All Blogs
+						Available Camps
 					</NavLink>
 				</li>
+				{user ? (
+					isAdmin ? (
+						<>
+							<li>
+								<NavLink
+									to={"/dashboard/organizer-profile"}
+									style={({ isActive }) => {
+										return {
+											fontWeight: isActive ? "bold" : "",
+											color: isActive ? "red" : "",
+											textDecoration: isActive ? "underline" : "",
+											marginRight: "1rem",
+										};
+									}}
+								>
+									Profile
+								</NavLink>
+							</li>
+							<li>
+								<NavLink
+									to={"/dashboard/organizer-overview"}
+									style={({ isActive }) => {
+										return {
+											fontWeight: isActive ? "bold" : "",
+											color: isActive ? "red" : "",
+											textDecoration: isActive ? "underline" : "",
+											marginRight: "1rem",
+										};
+									}}
+								>
+									Overview
+								</NavLink>
+							</li>
+						</>
+					) : (
+						<>
+							<li>
+								<NavLink
+									to={"/dashboard/participant-profile"}
+									style={({ isActive }) => {
+										return {
+											fontWeight: isActive ? "bold" : "",
+											color: isActive ? "red" : "",
+											textDecoration: isActive ? "underline" : "",
+											marginRight: "1rem",
+										};
+									}}
+								>
+									Profile
+								</NavLink>
+							</li>
+							<li>
+								<NavLink
+									to={"/dashboard/participant-overview"}
+									style={({ isActive }) => {
+										return {
+											fontWeight: isActive ? "bold" : "",
+											color: isActive ? "red" : "",
+											textDecoration: isActive ? "underline" : "",
+											marginRight: "1rem",
+										};
+									}}
+								>
+									Overview
+								</NavLink>
+							</li>
+						</>
+					)
+				) : (
+					""
+				)}
 				<li>
 					<NavLink
-						to={"/addBlogs"}
+						to={"/our-mission"}
 						style={({ isActive }) => {
 							return {
 								fontWeight: isActive ? "bold" : "",
 								color: isActive ? "red" : "",
+								textDecoration: isActive ? "underline" : "",
 								marginRight: "1rem",
 							};
 						}}
 					>
-						Add Blogs
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
-						to={"/featuredBlogs"}
-						style={({ isActive }) => {
-							return {
-								fontWeight: isActive ? "bold" : "",
-								color: isActive ? "red" : "",
-								marginRight: "1rem",
-							};
-						}}
-					>
-						Featured Blogs
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
-						to={"/myBlogs"}
-						style={({ isActive }) => {
-							return {
-								fontWeight: isActive ? "bold" : "",
-								color: isActive ? "red" : "",
-								marginRight: "1rem",
-							};
-						}}
-					>
-						My Blogs
-					</NavLink>
-				</li>
-				<li>
-					<NavLink
-						to={"/wishList"}
-						style={({ isActive }) => {
-							return {
-								fontWeight: isActive ? "bold" : "",
-								color: isActive ? "red" : "",
-								marginRight: "3rem",
-							};
-						}}
-					>
-						Wishlist
+						Our Mission
 					</NavLink>
 				</li>
 			</ul>
@@ -128,8 +162,8 @@ const Footer = () => {
 			</nav>
 			<aside>
 				<p>
-					Copyright © {new Date().getFullYear()} - All right reserved by Hikma |
-					Your Trusted Blogsphere
+					Copyright © {new Date().getFullYear()} - All right reserved by
+					MediCamp | Serving Community with Passion
 				</p>
 			</aside>
 		</footer>

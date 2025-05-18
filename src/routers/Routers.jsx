@@ -5,6 +5,7 @@ import Layout from "../layout/Layout";
 import AvailableCamp from "../pages/AvailableCamp";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
+import OurMission from "../pages/OurMission";
 import Register from "../pages/Register";
 
 const Routers = createBrowserRouter([
@@ -33,6 +34,10 @@ const Routers = createBrowserRouter([
 			{
 				path: "register",
 				element: <Register></Register>,
+			},
+			{
+				path: "our-mission",
+				element: <OurMission></OurMission>,
 			},
 		],
 	},

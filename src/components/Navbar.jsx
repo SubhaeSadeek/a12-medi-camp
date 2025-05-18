@@ -120,6 +120,21 @@ const Navbar = () => {
 			) : (
 				""
 			)}
+			<li>
+				<NavLink
+					to={"/our-mission"}
+					style={({ isActive }) => {
+						return {
+							fontWeight: isActive ? "bold" : "",
+							color: isActive ? "red" : "",
+							textDecoration: isActive ? "underline" : "",
+							marginRight: "1rem",
+						};
+					}}
+				>
+					Our Mission
+				</NavLink>
+			</li>
 		</>
 	);
 	return (
