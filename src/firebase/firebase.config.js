@@ -7,13 +7,14 @@ import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyBcEaQKbOtELUBTJdtFx-C-6_xZHUGpEBA",
-  authDomain: "medi-camp-6a87f.firebaseapp.com",
-  projectId: "medi-camp-6a87f",
-  storageBucket: "medi-camp-6a87f.firebasestorage.app",
-  messagingSenderId: "1087885974624",
-  appId: "1:1087885974624:web:a1796e87d6bb8908b07705"
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
+  authDomain: import.meta.env.VITE_FIREBASE_AUTH_DOMAIN,
+  projectId: import.meta.env.VITE_FIREBASE_PROJECT_ID,
+  storageBucket: import.meta.env.VITE_FIREBASE_STORAGE_BUCKET,
+  messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGING_SENDER_ID, 
+  appId: import.meta.env.VITE_FIREBASE_APP_ID,
 };
+
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);

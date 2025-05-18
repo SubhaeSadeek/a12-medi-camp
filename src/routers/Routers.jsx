@@ -7,6 +7,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import OurMission from "../pages/OurMission";
 import Register from "../pages/Register";
+import PrivateRoute from "./PrivateRoute";
 
 const Routers = createBrowserRouter([
 	{
@@ -38,6 +39,26 @@ const Routers = createBrowserRouter([
 			{
 				path: "our-mission",
 				element: <OurMission></OurMission>,
+			},
+		],
+	},
+	/* dashboard routes */
+	{
+		path: "dashboard",
+		element: (
+			<PrivateRoute>
+				<Dashboard></Dashboard>
+			</PrivateRoute>
+		),
+		errorElement: <Error></Error>,
+		children: [
+			{
+				path: "participant-overview",
+				element: (
+					<ParticipantRoute>
+						<ParticipantOverview></ParticipantOverview>
+					</ParticipantRoute>
+				),
 			},
 		],
 	},
