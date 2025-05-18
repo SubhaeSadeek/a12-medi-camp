@@ -4,16 +4,12 @@ import { FaCalendarAlt, FaClock, FaDollarSign, FaUsers } from "react-icons/fa";
 import { FaLocationDot, FaUserDoctor } from "react-icons/fa6";
 import { useParams } from "react-router-dom";
 import JoinCampModal from "../components/modal/JoinCampModal";
-import useAuth from "../hooks/useAuth";
 import useAxiosPublic from "../hooks/useAxiosPublic";
 import useTitle from "../hooks/useTitle";
 
 const CampDetails = () => {
 	useTitle("Camp Details");
-	const { user } = useAuth();
-	if (user) {
-		console.log("I am a suer");
-	}
+
 	const axiosPublic = useAxiosPublic();
 	const { id } = useParams();
 	const { data: camp = [], refetch } = useQuery({
