@@ -1,6 +1,8 @@
 import { createBrowserRouter } from "react-router-dom";
 import CampDetails from "../components/CampDetail";
 import Error from "../components/Error";
+import AddCamp from "../dashboard/organiser/AddCamp";
+import ManageCamps from "../dashboard/organiser/ManageCamp";
 import OrganizerOverview from "../dashboard/organiser/OrganizerOverview";
 import OrganizerProfile from "../dashboard/organiser/OrganizerProfile";
 import ParticipantCampEntry from "../dashboard/partcipant/ParticipantCampEntry";
@@ -97,6 +99,22 @@ const Routers = createBrowserRouter([
 				element: (
 					<AdminRoute>
 						<OrganizerOverview></OrganizerOverview>
+					</AdminRoute>
+				),
+			},
+			{
+				path: "add-camp",
+				element: (
+					<AdminRoute>
+						<AddCamp></AddCamp>
+					</AdminRoute>
+				),
+			},
+			{
+				path: "manage-camps",
+				element: (
+					<AdminRoute>
+						<ManageCamps></ManageCamps>
 					</AdminRoute>
 				),
 			},
