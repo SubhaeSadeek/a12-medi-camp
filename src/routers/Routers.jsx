@@ -1,4 +1,5 @@
 import { createBrowserRouter } from "react-router-dom";
+import CampDetails from "../components/CampDetail";
 import Error from "../components/Error";
 import Layout from "../layout/Layout";
 import Home from "../pages/Home";
@@ -14,6 +15,10 @@ const Routers = createBrowserRouter([
 			{
 				path: "",
 				element: <Home></Home>,
+			},
+			{
+				path: "camp-details/:id",
+				element: <CampDetails></CampDetails>,
 			},
 
 			{
