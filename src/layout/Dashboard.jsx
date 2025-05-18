@@ -98,7 +98,7 @@ const Dashboard = () => {
 						<>
 							<li>
 								<NavLink
-									to={"/dashboard/participant-overview"}
+									to={"/dashboard/participant-general"}
 									className={navLinkStyles}
 								>
 									<ImStatsBars className="text-3xl" /> Overview

@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 import CampDetails from "../components/CampDetail";
 import Error from "../components/Error";
 import ParticipantGeneral from "../dashboard/partcipant/ParticipantGeneral";
+import ParticipantProfile from "../dashboard/partcipant/ParticipantProfile";
 import Dashboard from "../layout/Dashboard";
 import Layout from "../layout/Layout";
 import AvailableCamp from "../pages/AvailableCamp";
@@ -56,10 +57,18 @@ const Routers = createBrowserRouter([
 		errorElement: <Error></Error>,
 		children: [
 			{
-				path: "participant-overview",
+				path: "participant-general",
 				element: (
 					<ParticipantRoute>
 						<ParticipantGeneral></ParticipantGeneral>
+					</ParticipantRoute>
+				),
+			},
+			{
+				path: "participant-profile",
+				element: (
+					<ParticipantRoute>
+						<ParticipantProfile></ParticipantProfile>
 					</ParticipantRoute>
 				),
 			},
