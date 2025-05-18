@@ -26,6 +26,7 @@
     "react-router-dom": "^7.6.0",
     "react-select": "^5.10.1",
     "react-slick": "^0.30.3",
+    "recharts": "^2.15.3",
     "slick-carousel": "^1.8.1",
     "sweetalert2": "^11.21.1",
     "tailwindcss": "^4.1.7"

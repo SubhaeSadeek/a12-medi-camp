@@ -1,6 +1,9 @@
 import { createBrowserRouter } from "react-router-dom";
 import CampDetails from "../components/CampDetail";
 import Error from "../components/Error";
+import OrganizerOverview from "../dashboard/organiser/OrganizerOverview";
+import OrganizerProfile from "../dashboard/organiser/OrganizerProfile";
+import ParticipantCampEntry from "../dashboard/partcipant/ParticipantCampEntry";
 import ParticipantGeneral from "../dashboard/partcipant/ParticipantGeneral";
 import ParticipantProfile from "../dashboard/partcipant/ParticipantProfile";
 import Dashboard from "../layout/Dashboard";
@@ -10,6 +13,7 @@ import Home from "../pages/Home";
 import Login from "../pages/Login";
 import OurMission from "../pages/OurMission";
 import Register from "../pages/Register";
+import AdminRoute from "./AdminRoute";
 import ParticipantRoute from "./ParticipantRoute";
 import PrivateRoute from "./PrivateRoute";
 
@@ -70,6 +74,30 @@ const Routers = createBrowserRouter([
 					<ParticipantRoute>
 						<ParticipantProfile></ParticipantProfile>
 					</ParticipantRoute>
+				),
+			},
+			{
+				path: "registered-camps",
+				element: (
+					<ParticipantRoute>
+						<ParticipantCampEntry></ParticipantCampEntry>
+					</ParticipantRoute>
+				),
+			},
+			{
+				path: "organizer-profile",
+				element: (
+					<AdminRoute>
+						<OrganizerProfile></OrganizerProfile>
+					</AdminRoute>
+				),
+			},
+			{
+				path: "organizer-overview",
+				element: (
+					<AdminRoute>
+						<OrganizerOverview></OrganizerOverview>
+					</AdminRoute>
 				),
 			},
 		],
