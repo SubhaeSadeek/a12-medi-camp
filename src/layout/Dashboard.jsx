@@ -1,4 +1,4 @@
-import { FaBars, FaHome } from "react-icons/fa";
+import { FaBars } from "react-icons/fa";
 import {
 	FaCreditCard,
 	FaList,
@@ -7,21 +7,20 @@ import {
 	FaUser,
 } from "react-icons/fa6";
 import { ImStatsBars } from "react-icons/im";
-import { MdExitToApp } from "react-icons/md";
 import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
-import logo from "../../assets/Logo/MediCamp.svg";
-import useAdmin from "../../hooks/useAdmin";
-import useAuth from "../../hooks/useAuth";
+import logo from "../assets/logo.png";
+import useAdmin from "../hooks/useAdmin";
+import useAuth from "../hooks/useAuth";
 const Dashboard = () => {
 	const [isAdmin] = useAdmin();
-	const { signOutUser } = useAuth();
+	const { logOut } = useAuth();
 	const navigate = useNavigate();
 	const navLinkStyles = ({ isActive }) =>
 		`flex justify-start pl-2 btn btn-ghost mb-3 font-bold uppercase ${
 			isActive ? "text-primary" : "text-white"
 		}`;
 	const handleLogOut = () => {
-		signOutUser();
+		logOut();
 		navigate("/");
 	};
 	return (
@@ -43,8 +42,12 @@ const Dashboard = () => {
 					className="drawer-overlay"
 				></label>
 				<ul className="menu bg-slate-800 min-h-screen w-70 p-4">
-					<Link to={"/"}>
-						<img className="mt-4 w-56 drop-shadow-xl" src={logo} alt="" />
+					<Link
+						to={"/"}
+						className="flex items-center  gap-2 text-2xl font-bold text-amber-500"
+					>
+						<img className="mt-4 w-1/6  drop-shadow-xl" src={logo} alt="" />
+						<p>MediCamp</p>
 					</Link>
 					<div className="divider divider-info mb-10"></div>
 					{/* Sidebar content here */}
@@ -132,14 +135,14 @@ const Dashboard = () => {
 						<li className="absolute bottom-20">
 							<NavLink
 								to={"/"}
-								className="btn btn-ghost text-primary text-2xl uppercase font-bold"
+								className="btn btn-ghost text-primary text-xl uppercase font-semibold"
 							>
-								<FaHome className="text-3xl" /> Home
+								Home
 							</NavLink>
 						</li>
 						<li className="absolute bottom-6" onClick={handleLogOut}>
-							<NavLink className="btn bg-secondary  border-none text-primary hover:bg-secondary text-2xl uppercase font-bold">
-								<MdExitToApp className="text-3xl" /> Logout
+							<NavLink className="btn btn-ghost border-none text-primary  text-xl uppercase font-semibold">
+								Logout
 							</NavLink>
 						</li>
 					</>

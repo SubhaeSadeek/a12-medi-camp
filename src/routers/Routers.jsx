@@ -1,12 +1,15 @@
 import { createBrowserRouter } from "react-router-dom";
 import CampDetails from "../components/CampDetail";
 import Error from "../components/Error";
+import ParticipantGeneral from "../dashboard/partcipant/ParticipantGeneral";
+import Dashboard from "../layout/Dashboard";
 import Layout from "../layout/Layout";
 import AvailableCamp from "../pages/AvailableCamp";
 import Home from "../pages/Home";
 import Login from "../pages/Login";
 import OurMission from "../pages/OurMission";
 import Register from "../pages/Register";
+import ParticipantRoute from "./ParticipantRoute";
 import PrivateRoute from "./PrivateRoute";
 
 const Routers = createBrowserRouter([
@@ -56,7 +59,7 @@ const Routers = createBrowserRouter([
 				path: "participant-overview",
 				element: (
 					<ParticipantRoute>
-						<ParticipantOverview></ParticipantOverview>
+						<ParticipantGeneral></ParticipantGeneral>
 					</ParticipantRoute>
 				),
 			},
