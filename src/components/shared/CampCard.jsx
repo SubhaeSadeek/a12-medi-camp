@@ -3,6 +3,7 @@ import moment from "moment";
 import { FaCalendar, FaDollarSign, FaUserClock } from "react-icons/fa";
 import { FaMapLocation, FaPerson, FaUserDoctor } from "react-icons/fa6";
 import { Link } from "react-router-dom";
+import BtnPrime from "./BtnPrime";
 
 const CampCard = ({ item }) => {
 	const {
@@ -60,9 +61,7 @@ const CampCard = ({ item }) => {
 			</div>
 			<div className="flex justify-end px-6 pb-6">
 				<Link to={`/camp-details/${_id}`}>
-					<button className="btn bg-indigo-600/60 hover:bg-indigo-200">
-						Detail
-					</button>
+					<BtnPrime btnText={"Detail"}></BtnPrime>
 				</Link>
 			</div>
 		</div>
