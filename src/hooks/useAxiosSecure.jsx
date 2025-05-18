@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const axiosSecure = axios.create({
-	baseURL: "http://localhost:5001",
+	baseURL: "https://a12-server-lyart.vercel.app",
 });
 
 axiosSecure.interceptors.request.use(
